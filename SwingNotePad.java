@@ -35,7 +35,8 @@ public class SwingNotePad {
 
         openButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Open functionality coming soon!");
+                String fPicker  = FilePicker.open();
+                textArea.setText(fPicker);
             }
         });
 

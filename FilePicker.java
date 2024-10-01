@@ -12,10 +12,10 @@ public class FilePicker {
         // Check if a file was selected
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             return selectedFile.getAbsolutePath();
         } else {
-            System.out.println("File selection was cancelled.");
+            //System.out.println("File selection was cancelled.");
             return "";
         }
     }

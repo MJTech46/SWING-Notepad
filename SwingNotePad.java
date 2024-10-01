@@ -4,7 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SwingNotePad {
-    public static void main(String[] args) {
+
+    public SwingNotePad() {
         // Create the frame (window)
         JFrame frame = new JFrame("Swing NotePad");
 
@@ -28,15 +29,18 @@ public class SwingNotePad {
         // Add action listeners for button actions
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Clear the text area for new document
-                textArea.setText("");
+                // create a new window
+                SwingNotePad newNotePad = new SwingNotePad();
             }
         });
 
         openButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String fPicker  = FilePicker.open();
-                textArea.setText(fPicker);
+                String filePath = FilePicker.open();
+                String fileText = FileReader.read(filePath);
+                if (fileText != "") {
+                    textArea.setText(fileText);
+                }
             }
         });
 
@@ -64,10 +68,14 @@ public class SwingNotePad {
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         // Set the frame size
-        frame.setSize(500, 400);
+        frame.setSize(800, 600);
         // Set the default close operation
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // Set the frame visible
         frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingNotePad notePad = new SwingNotePad();
     }
 }

@@ -9,6 +9,7 @@ public class FileReader {
         String outputText = "";
         try {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
+            outputText = lines.removeFirst();
             for (String line : lines) {
                 //System.out.println(line);
                 outputText= outputText+ "\n" + line;

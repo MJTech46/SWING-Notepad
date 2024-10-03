@@ -2,8 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
 
 public class SwingNotePad {
+    private String filePath = "";
 
     public SwingNotePad() {
         // Create the frame (window)
@@ -36,7 +41,7 @@ public class SwingNotePad {
 
         openButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String filePath = FilePicker.open();
+                filePath = FilePicker.open();
                 String fileText = FileReader.read(filePath);
                 if (fileText != "") {
                     textArea.setText(fileText);
@@ -46,7 +51,17 @@ public class SwingNotePad {
 
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Save functionality coming soon!");
+                if (filePath.isEmpty()) {
+                    Path folderPath = Paths.get(FolderPicker.open());
+                    Path fileName = Paths.get(JOptionPane.showInputDialog(null,"Enter new file name:", "File Name?", JOptionPane.QUESTION_MESSAGE));
+                    filePath = folderPath.resolve(fileName).toString();
+                    //System.out.println(folderPath.resolve(fileName));
+                    saveButton.doClick();
+                } else {
+                    // converting the string to a list and then saving it
+                    FileWriter.write(filePath, Arrays.asList(textArea.getText().split("\n")));
+                    JOptionPane.showMessageDialog(frame, "File saved!");
+                }
             }
         });
 

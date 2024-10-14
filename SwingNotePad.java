@@ -52,15 +52,25 @@ public class SwingNotePad {
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (filePath.isEmpty()) {
-                    Path folderPath = Paths.get(FolderPicker.open());
-                    Path fileName = Paths.get(JOptionPane.showInputDialog(null,"Enter new file name:", "File Name?", JOptionPane.QUESTION_MESSAGE));
+                    // for preventing from unselected path problems
+                    String strFolderPath = "";
+                    while (strFolderPath.isEmpty()) {
+                        strFolderPath = FolderPicker.open();
+                    }
+                    String strFileName = "";
+                    while (strFileName == null || strFileName.isEmpty()) {
+                        strFileName = JOptionPane.showInputDialog(null,"Enter new file name:", "File Name?", JOptionPane.QUESTION_MESSAGE);
+                    }
+                    // joining the folder path and file name
+                    Path folderPath = Paths.get(strFolderPath);
+                    Path fileName = Paths.get(strFileName);
                     filePath = folderPath.resolve(fileName).toString();
                     //System.out.println(folderPath.resolve(fileName));
                     saveButton.doClick();
                 } else {
                     // converting the string to a list and then saving it
                     FileWriter.write(filePath, Arrays.asList(textArea.getText().split("\n")));
-                    JOptionPane.showMessageDialog(frame, "File saved!");
+                    JOptionPane.showMessageDialog(frame, "File saved at: " + filePath);
                 }
             }
         });

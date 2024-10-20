@@ -1,0 +1,20 @@
+1. Create a Manifest File: Create a file named MANIFEST.MF with the following content:
+```
+Manifest-Version: 1.0
+Main-Class: folder.mainClass
+```
+
+2. Package Your Files: 
+```
+jar cfm YourProject.jar MANIFEST.MF -C folder .
+```
+
+3. Verify the JAR File:
+```
+jar tf YourProject.jar
+```
+
+4. Run Your JAR File:
+```
+java -jar YourProject.jar
+```
